@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Form Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input:focus {
+      border-color: #007BFF;
+      outline: none;
+    }
+    .error {
+      color: red;
+      font-size: 13px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="signupForm">
+    <h2>Sign Up</h2>
+    <label>Email:</label>
+    <input type="email" id="email" placeholder="Enter your email">
+    <div class="error" id="emailError"></div>
+
+    <label>Password:</label>
+    <input type="password" id="password" placeholder="Enter password">
+    <div class="error" id="passwordError"></div>
+
+    <label>Confirm Password:</label>
+    <input type="password" id="confirmPassword" placeholder="Confirm password">
+    <div class="error" id="confirmError"></div>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('signupForm');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault(); // stop form from submitting
+
+      let valid = true;
+
+      // Clear previous errors
+      document.querySelectorAll('.error').forEach(el => el.textContent = '');
+
+      // Email validation
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!email.value.match(emailPattern)) {
+        document.getElementById('emailError').textContent = 'Please enter a valid email';
+        valid = false;
+      }
+
+      // Password length validation
+      if (password.value.length < 6) {
+        document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
+        valid = false;
+      }
+
+      // Password match validation
+      if (password.value !== confirmPassword.value) {
+        document.getElementById('confirmError').textContent = 'Passwords do not match';
+        valid = false;
+      }
+
+      // If valid, show success alert
+      if (valid) {
+        alert('Registration Successful!');
+        form.reset();
+      }
+    });
+  </script>
+
+</body>
+</html>
